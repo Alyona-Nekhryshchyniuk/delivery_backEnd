@@ -1,3 +1,7 @@
+const { Schema, model } = require("mongoose");
+
+const { DefineModel } = require("./models/menu");
+
 const cors = require("cors");
 
 const express = require("express");
@@ -8,7 +12,9 @@ app.use(express.json());
 
 app.get("/api/:shop", async (req, res, next) => {
   const { shop } = req.params;
-  const dishes = await getAllDishes(shop);
+
+  const dishes = await DefineModel(shop)?.find();
+  !dishes && next(new Error());
   res.json({ dishes });
 });
 
@@ -16,13 +22,8 @@ app.get("/api/:shop", async (req, res, next) => {
 //   res.status(404).json({ message: "Not found" });
 // });
 
-// app.use((err, req, res, next) => {
-//   res.status(500).json({ message: err.message });
-// });
+app.use((err, req, res, next) => {
+  res.status(404).json({ message: "No such shop or menu there!" });
+});
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000")
-})
-
-
-// module.exports = app;
+module.exports = app;
