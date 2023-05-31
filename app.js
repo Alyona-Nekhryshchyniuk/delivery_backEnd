@@ -14,8 +14,7 @@ app.get("/api/:shop", async (req, res, next) => {
   const { shop } = req.params;
 
   const dishes = await DefineModel(shop)?.find();
-  !dishes && next(new Error());
-  res.json({ dishes });
+  return !dishes ? next(new Error()) : res.json({ dishes });
 });
 
 // app.use((req, res) => {
