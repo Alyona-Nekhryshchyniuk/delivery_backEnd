@@ -1,5 +1,3 @@
-const { Schema, model } = require("mongoose");
-
 const { DefineModel } = require("./models/menu");
 
 const cors = require("cors");
@@ -17,11 +15,9 @@ app.get("/api/:shop", async (req, res, next) => {
   return !dishes ? next(new Error()) : res.json({ dishes });
 });
 
-// app.use((req, res) => {
-//   res.status(404).json({ message: "Not found" });
-// });
 
 app.use((err, req, res, next) => {
+  if (err)
   res.status(404).json({ message: "No such shop or menu there!" });
 });
 

@@ -11,7 +11,7 @@ const { DB_ACCESS, PORT = 3000 } = process.env;
 })()
   .then(
     app.listen(PORT, () => {
-      console.log("Server running. Use our API on port: 3001");
+      console.log(`Server running. Use our API on port: ${PORT}`);
     })
   )
   .catch((error) => {
